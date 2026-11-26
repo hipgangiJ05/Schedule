@@ -45,7 +45,7 @@
 - Endpoint: `/schedule?author={author}`
 - Request Body:
 - Response Body: 식별자, 제목, 내용, 작성자, 작성일, 수정일
-- Success Status: 200 OK
+- Success Status: `200 OK`
 
 #### Response Example
 
@@ -67,7 +67,7 @@
 - Endpoint: `/schedule/{id}`
 - Request Body:
 - Response Body: 식별자, 제목, 내용, 작성자, 작성일, 수정일
-- Success Status: 200 OK
+- Success Status: `200 OK`
 
 #### Response Example
 
@@ -98,7 +98,7 @@
 ```
 
 - Response Body:  식별자, 제목, 내용, 작성자, 작성일, 수정일
-- Success Status: 200 OK
+- Success Status: `200 OK`
 
 #### Response Example
 
@@ -126,5 +126,18 @@
 ```
 
 - Response Body:
-- Success Status: 204 No Content
+- Success Status: `204 No Content`
 
+#### Error Responses
+- `404 Not Found`: 해당 식별자의 일정이 존재하지 않는 경우
+```JSON
+{
+  "message": "해당 일정이 존재하지 않습니다."
+}
+```
+- `403 Forbidden`: 비밀번호가 일치하지 않는 경우
+```JSON
+{
+  "message": "비밀번호가 일치하지 않습니다."
+}
+```
