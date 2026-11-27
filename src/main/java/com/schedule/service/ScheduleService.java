@@ -1,8 +1,6 @@
 package com.schedule.service;
 
-import com.schedule.dto.CreateScheduleRequest;
-import com.schedule.dto.CreateScheduleResponse;
-import com.schedule.dto.GetScheduleResponse;
+import com.schedule.dto.*;
 import com.schedule.entity.Schedule;
 import com.schedule.repository.ScheduleRepository;
 
@@ -10,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +20,8 @@ public class ScheduleService {
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getAuthor(), request.getPassword());
-        Schedule savedShedule = scheduleRepository.save(schedule);
-        return new CreateScheduleResponse(savedShedule.getId(), savedShedule.getTitle(), savedShedule.getContent(), savedShedule.getAuthor(), savedShedule.getCreatedAt(), savedShedule.getModifiedAt());
+        Schedule savedSchedule = scheduleRepository.save(schedule);
+        return new CreateScheduleResponse(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getAuthor(), savedShedule.getCreatedAt(), savedShedule.getModifiedAt());
     }
 
     @Transactional(readOnly = true)
@@ -56,5 +55,22 @@ public class ScheduleService {
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
         );
+    }
+
+    @Transactional
+    public UpdateScheduleResponse update(Long id, UpdateScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("존재하지 않는 일정입니다.")
+        );
+        schedule.update(request.getTitle(), request.getAuthor());
+        return new UpdateScheduleResponse(schedule.getId(), schedule.getTitle(), schedule.getContent(), schedule.getAuthor(), schedule.getCreatedAt(), schedule.getModifiedAt());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        boolean existence = scheduleRepository.existsById(id);
+        if (!existence) {throw new IllegalStateException("존재하지 않는 유저입니다");}
+        scheduleRepository.deleteById(id);
+
     }
 }
