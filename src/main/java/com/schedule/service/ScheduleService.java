@@ -21,7 +21,7 @@ public class ScheduleService {
     public CreateScheduleResponse save(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getAuthor(), request.getPassword());
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        return new CreateScheduleResponse(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getAuthor(), savedShedule.getCreatedAt(), savedShedule.getModifiedAt());
+        return new CreateScheduleResponse(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getAuthor(), savedSchedule.getCreatedAt(), savedSchedule.getModifiedAt());
     }
 
     @Transactional(readOnly = true)

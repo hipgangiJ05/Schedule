@@ -20,11 +20,11 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedule?author={author}")
-    public List<GetScheduleResponse> getAll(){
+    public List<GetScheduleResponse> getAll(@RequestParam(required = false) String author){
         return scheduleService.getAll();
     }
 
-    @GetMapping("/schedule/{Id}")
+    @GetMapping("/schedule/{id}")
     public GetScheduleResponse getOne(@PathVariable Long id){
         return scheduleService.getOne(id);
     }
@@ -35,7 +35,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/schedule/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id, @RequestBody DeleteScheduleRequest request){
         scheduleService.delete(id);
     }
 
